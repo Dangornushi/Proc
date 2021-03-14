@@ -5,8 +5,8 @@ int main( int argc, char **arg ){
     char buf[16];
     int i2;
     map<int, string> map1;
+    map<string, string> func;
     vector<string> vec;
-    string funcname;
     
     file.open(split( arg[1], "." )[0],std::ios::in|std::ios::binary);
     if ( !file.is_open() ) {
@@ -24,10 +24,22 @@ int main( int argc, char **arg ){
         }
     }
 
-    vec = split( map1[0], "    " );
+    vec = split( map1[0], ";" );
+    string funcname;
     for ( int i = 0; i < vec.size(); i++ ) {
-        print(vec[i]);
-    }    
+        if ( vec[i].find(":") != string::npos ) {
+            funcname = "";
+            funcname = split( vec[i], ":" )[0];
+            func[funcname] += split( vec[i], ":" )[1]+";";
+        }
+        else {
+            func[funcname] += vec[i]+";";
+        }
+    }
+    if ( funcname != "main" ) {
+        print(funcname);
+    }
+
     file.close();
     return 0;
 }
