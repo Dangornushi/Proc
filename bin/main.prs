@@ -1,0 +1,4 @@
+main:
+    mode:int
+    add x, 3
+    put x
