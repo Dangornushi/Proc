@@ -30,6 +30,6 @@ vector<string> remove(vector<string> vector, int index) ;
 bool keyfind(map<string, string> m, string v) ;
 string calc( string data, map<string, string> valls, string mark ) ;
 int ifj( string data, map<string, string> valls, string mark ) ;
-void VM( string data, string arg1, map<string, string>funcs, map<string, string>valls, vector<string> funcvalls ) ;
+void VM( map<string, string>func, string funcname ) ;
 vector<string> inc ( string callfunc );
 vector<int> hex(const char *string) ;

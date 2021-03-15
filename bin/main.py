@@ -88,13 +88,13 @@ def main():
         elif tok.type == "NAME" or tok.type == "EQUAL" or tok.type == "PULS" or tok.type == "NUMBER":
             if count == 1 and retcount == 0:
                 if tok.value == "int":
-                    ase.write("\n    mode>int;")
+                    ase.write("\nmode>int;")
         
                 elif tok.value == "put":
                     count2 = 4
                 
                 elif tok.value == "str":
-                    ase.write("\n    mode>str;")
+                    ase.write("\nmode>str;")
                 
                 elif tok.type == "NAME" and count2 != 2:
                     arg = tok.value
@@ -106,16 +106,16 @@ def main():
                     count2 = 3
 
                 elif count2 == 2:
-                    ase.write("\n    mov "+arg+", "+tok.value)
+                    ase.write("\nmov "+arg+", "+tok.value)
                     count = 0
                 
 
                 elif count2 == 3:
-                    ase.write("\n    add "+arg+", "+tok.value+";")
+                    ase.write("\nadd "+arg+", "+tok.value+";")
                     count = 0
                 
             elif count2 == 4:
-                ase.write("\n    put "+arg+";")
+                ase.write("\nput "+arg+";")
 
         elif tok.type == "SEMI":
             count = 1

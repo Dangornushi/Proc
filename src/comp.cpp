@@ -1,23 +1,21 @@
 #include "main.hpp"
 
 int main( int argc, char **arg ){
-    ifstream ifs;
-    double a[100];
     string data, name = arg[1];
-    FILE *file;
     stringstream ss;
-
-    ifs.open(name+"s");
-
-    file = fopen( split( arg[1], "." )[0].c_str(),"wb");
+    ifstream ifs( name+"s", ios::binary|ios::in );
+    ofstream ofs ( split( name, "." )[0], ios::binary|ios::out );
 
     while ( getline( ifs, data ) ) {
         for ( int i = 0; i < data.size();i++ ) {
             string data2 = data.substr( i, data.size()-(data.size()-1) );
-            fwrite(&data2, sizeof(data2), 1, file);
+            for (const auto &item : data2) {
+                ss << hex << int(item);
+            }
+
         }
     }
-    fclose(file);
+    ofs << ss.str() << flush;
 
     return 0;
 }

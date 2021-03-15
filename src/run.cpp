@@ -1,45 +1,42 @@
 #include "main.hpp"
 
 int main( int argc, char **arg ){
-    ifstream file;
-    char buf[16];
-    int i2;
-    map<int, string> map1;
-    map<string, string> func;
+    
+    ifstream fin( split( arg[1], "." )[0], ios::in | ios::binary );
+    string data;
+    string funcname;
     vector<string> vec;
+    map<string, string> func;
     
-    file.open(split( arg[1], "." )[0],std::ios::in|std::ios::binary);
-    if ( !file.is_open() ) {
-        cout <<  "file open error" << endl;
-        return EXIT_FAILURE;
+    if (!fin){
+        cout << "ファイル file.txt が開けません";
+        return 1;
     }
-    
-    while( !file.eof() ) {
-        i2 = 0;
-        file.read(buf,sizeof(1));
-        for(int i=0,size=file.gcount();i<size;++i) {
-            string bu( 1, buf[i] );
-            map1[i2] += bu;
-            i2 ++;
-        }
+    char buf[16];
+    while(!fin.eof()) {
+        fin.read(buf,sizeof(1));
+        string data2( buf, 16 );
+        data += data2;
     }
 
-    vec = split( map1[0], ";" );
-    string funcname;
-    for ( int i = 0; i < vec.size(); i++ ) {
-        if ( vec[i].find(":") != string::npos ) {
-            funcname = "";
-            funcname = split( vec[i], ":" )[0];
-            func[funcname] += split( vec[i], ":" )[1]+";";
+    vec = split( data, "3b" );
+    for ( int i =0; i < vec.size(); i++ ) {
+        if ( vec[i].find("3a") != string::npos ) {
+            funcname = split( vec[i], "3a" )[0];
+            func[funcname] = split( vec[i], "3a" )[1];
         }
         else {
-            func[funcname] += vec[i]+";";
+            func[funcname] += vec[i];//+"3a";
         }
     }
-    if ( funcname != "main" ) {
-        print(funcname);
-    }
-
-    file.close();
+    VM( func, funcname );
+    fin.close();
     return 0;
+}
+
+void VM( map<string, string>func, string funcname ) {
+    vector<string> vec = split( func[funcname], "3a" );
+    for ( int i = 0; i < vec.size(); i++ ) {
+        print(vec[i]);
+    }
 }
