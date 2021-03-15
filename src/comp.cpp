@@ -12,10 +12,11 @@ int main( int argc, char **arg ){
             for (const auto &item : data2) {
                 ss << hex << int(item);
             }
-
         }
     }
     ofs << ss.str() << flush;
+    ofs.close();
+    ifs.close();
 
     return 0;
 }

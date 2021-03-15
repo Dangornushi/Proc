@@ -33,3 +33,4 @@ int ifj( string data, map<string, string> valls, string mark ) ;
 void VM( map<string, string>func, string funcname ) ;
 vector<string> inc ( string callfunc );
 vector<int> hex(const char *string) ;
+unsigned int binToUInt(const string &str) ;
