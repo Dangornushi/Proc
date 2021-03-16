@@ -19,6 +19,7 @@ tokens = (
     "KAKE",
     "WARU",
     "EQUAL",
+    "DOUBLE",
 )
 
 reserved = {
@@ -46,6 +47,14 @@ t_KAKE = r"\*"
 t_WARU = r"\/"
 t_EQUAL = r"\="
 
+def t_DOUBLE(t):
+    r'([1-9][0-9]*|0)\.[0-9]+'
+    try:
+        t.value = float(t.value)
+    except ValueError:
+        print("Line %d: double value %s is too large" % t.lineno, t.value)
+        t.value = 0
+    return t
 
 def t_newline(t):
     r'\n+'
@@ -106,7 +115,7 @@ def main():
                     count2 = 3
 
                 elif count2 == 2:
-                    ase.write("\nmov "+arg+", "+tok.value)
+                    ase.write("\nmov "+arg+", "+tok.value+";")
                     count = 0
                 
 

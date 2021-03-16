@@ -1,6 +1,7 @@
 /* 2/5~ */
 #pragma once
 #include <fstream>
+#include <array>
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -12,6 +13,7 @@
 #include <sstream>
 #include <utility>
 #include <algorithm>
+#include <cctype>
 
 //----------------------
 
@@ -34,3 +36,5 @@ void VM( map<string, string>func, string funcname ) ;
 vector<string> inc ( string callfunc );
 vector<int> hex(const char *string) ;
 unsigned int binToUInt(const string &str) ;
+bool intj ( string hoge )  ;
+bool intkeyfind(map<string, int> m, string v) ;

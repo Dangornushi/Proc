@@ -58,6 +58,15 @@ vector<int> hex(const char *string) {
     return vec;
 }
 
+bool intj ( string hoge ) {
+    try {
+        return true;
+    }
+    catch (std::out_of_range &e) {
+        return false;
+    }
+}
+
 int ifj( string data, map<string, string> valls, string mark ) {
     string funcname = split( data, ", " )[2], a, b;
     a = split( replace( data, mark ), ", " )[0];
@@ -195,5 +204,9 @@ vector<string> remove(vector<string> vector, int index) {
 }
 
 bool keyfind(map<string, string> m, string v) {
+    return m.find(v) != m.end(); // findを使ったいつものやつ
+}
+
+bool intkeyfind(map<string, int> m, string v) {
     return m.find(v) != m.end(); // findを使ったいつものやつ
 }

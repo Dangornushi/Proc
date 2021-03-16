@@ -1,4 +1,4 @@
 main:
-mode>int;
-add x, 3;
+mode>str;
+mov x, "NOT";
 put x;
