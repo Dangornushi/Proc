@@ -1,0 +1,381 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> expr
+Rule 1     expr -> MOLD NAME EQUAL NUMBER
+Rule 2     expr -> MOLD expr PLUS expr
+Rule 3     expr -> MOLD expr MINUS expr
+Rule 4     expr -> MINUS expr
+Rule 5     expr -> MOLD expr TIMES expr
+Rule 6     expr -> MOLD expr DIV expr
+Rule 7     expr -> NAME
+Rule 8     expr -> MOLD
+Rule 9     expr -> NUMBER
+Rule 10    expr -> LPAREN expr RPAREN
+
+Terminals, with rules where they appear
+
+DIV                  : 6
+EQUAL                : 1
+LPAREN               : 10
+MINUS                : 3 4
+MOLD                 : 1 2 3 5 6 8
+NAME                 : 1 7
+NUMBER               : 1 9
+PLUS                 : 2
+RPAREN               : 10
+TIMES                : 5
+error                : 
+
+Nonterminals, with rules where they appear
+
+expr                 : 2 2 3 3 4 5 5 6 6 10 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expr
+    (1) expr -> . MOLD NAME EQUAL NUMBER
+    (2) expr -> . MOLD expr PLUS expr
+    (3) expr -> . MOLD expr MINUS expr
+    (4) expr -> . MINUS expr
+    (5) expr -> . MOLD expr TIMES expr
+    (6) expr -> . MOLD expr DIV expr
+    (7) expr -> . NAME
+    (8) expr -> . MOLD
+    (9) expr -> . NUMBER
+    (10) expr -> . LPAREN expr RPAREN
+
+    MOLD            shift and go to state 2
+    MINUS           shift and go to state 5
+    NAME            shift and go to state 3
+    NUMBER          shift and go to state 4
+    LPAREN          shift and go to state 6
+
+    expr                           shift and go to state 1
+
+state 1
+
+    (0) S' -> expr .
+
+
+
+state 2
+
+    (1) expr -> MOLD . NAME EQUAL NUMBER
+    (2) expr -> MOLD . expr PLUS expr
+    (3) expr -> MOLD . expr MINUS expr
+    (5) expr -> MOLD . expr TIMES expr
+    (6) expr -> MOLD . expr DIV expr
+    (8) expr -> MOLD .
+    (1) expr -> . MOLD NAME EQUAL NUMBER
+    (2) expr -> . MOLD expr PLUS expr
+    (3) expr -> . MOLD expr MINUS expr
+    (4) expr -> . MINUS expr
+    (5) expr -> . MOLD expr TIMES expr
+    (6) expr -> . MOLD expr DIV expr
+    (7) expr -> . NAME
+    (8) expr -> . MOLD
+    (9) expr -> . NUMBER
+    (10) expr -> . LPAREN expr RPAREN
+
+  ! shift/reduce conflict for MINUS resolved as shift
+    NAME            shift and go to state 7
+    $end            reduce using rule 8 (expr -> MOLD .)
+    PLUS            reduce using rule 8 (expr -> MOLD .)
+    TIMES           reduce using rule 8 (expr -> MOLD .)
+    DIV             reduce using rule 8 (expr -> MOLD .)
+    RPAREN          reduce using rule 8 (expr -> MOLD .)
+    MOLD            shift and go to state 2
+    MINUS           shift and go to state 5
+    NUMBER          shift and go to state 4
+    LPAREN          shift and go to state 6
+
+  ! MINUS           [ reduce using rule 8 (expr -> MOLD .) ]
+
+    expr                           shift and go to state 8
+
+state 3
+
+    (7) expr -> NAME .
+
+    $end            reduce using rule 7 (expr -> NAME .)
+    PLUS            reduce using rule 7 (expr -> NAME .)
+    MINUS           reduce using rule 7 (expr -> NAME .)
+    TIMES           reduce using rule 7 (expr -> NAME .)
+    DIV             reduce using rule 7 (expr -> NAME .)
+    RPAREN          reduce using rule 7 (expr -> NAME .)
+
+
+state 4
+
+    (9) expr -> NUMBER .
+
+    $end            reduce using rule 9 (expr -> NUMBER .)
+    PLUS            reduce using rule 9 (expr -> NUMBER .)
+    MINUS           reduce using rule 9 (expr -> NUMBER .)
+    TIMES           reduce using rule 9 (expr -> NUMBER .)
+    DIV             reduce using rule 9 (expr -> NUMBER .)
+    RPAREN          reduce using rule 9 (expr -> NUMBER .)
+
+
+state 5
+
+    (4) expr -> MINUS . expr
+    (1) expr -> . MOLD NAME EQUAL NUMBER
+    (2) expr -> . MOLD expr PLUS expr
+    (3) expr -> . MOLD expr MINUS expr
+    (4) expr -> . MINUS expr
+    (5) expr -> . MOLD expr TIMES expr
+    (6) expr -> . MOLD expr DIV expr
+    (7) expr -> . NAME
+    (8) expr -> . MOLD
+    (9) expr -> . NUMBER
+    (10) expr -> . LPAREN expr RPAREN
+
+    MOLD            shift and go to state 2
+    MINUS           shift and go to state 5
+    NAME            shift and go to state 3
+    NUMBER          shift and go to state 4
+    LPAREN          shift and go to state 6
+
+    expr                           shift and go to state 9
+
+state 6
+
+    (10) expr -> LPAREN . expr RPAREN
+    (1) expr -> . MOLD NAME EQUAL NUMBER
+    (2) expr -> . MOLD expr PLUS expr
+    (3) expr -> . MOLD expr MINUS expr
+    (4) expr -> . MINUS expr
+    (5) expr -> . MOLD expr TIMES expr
+    (6) expr -> . MOLD expr DIV expr
+    (7) expr -> . NAME
+    (8) expr -> . MOLD
+    (9) expr -> . NUMBER
+    (10) expr -> . LPAREN expr RPAREN
+
+    MOLD            shift and go to state 2
+    MINUS           shift and go to state 5
+    NAME            shift and go to state 3
+    NUMBER          shift and go to state 4
+    LPAREN          shift and go to state 6
+
+    expr                           shift and go to state 10
+
+state 7
+
+    (1) expr -> MOLD NAME . EQUAL NUMBER
+    (7) expr -> NAME .
+
+    EQUAL           shift and go to state 11
+    PLUS            reduce using rule 7 (expr -> NAME .)
+    MINUS           reduce using rule 7 (expr -> NAME .)
+    TIMES           reduce using rule 7 (expr -> NAME .)
+    DIV             reduce using rule 7 (expr -> NAME .)
+
+
+state 8
+
+    (2) expr -> MOLD expr . PLUS expr
+    (3) expr -> MOLD expr . MINUS expr
+    (5) expr -> MOLD expr . TIMES expr
+    (6) expr -> MOLD expr . DIV expr
+
+    PLUS            shift and go to state 12
+    MINUS           shift and go to state 13
+    TIMES           shift and go to state 14
+    DIV             shift and go to state 15
+
+
+state 9
+
+    (4) expr -> MINUS expr .
+
+    $end            reduce using rule 4 (expr -> MINUS expr .)
+    PLUS            reduce using rule 4 (expr -> MINUS expr .)
+    MINUS           reduce using rule 4 (expr -> MINUS expr .)
+    TIMES           reduce using rule 4 (expr -> MINUS expr .)
+    DIV             reduce using rule 4 (expr -> MINUS expr .)
+    RPAREN          reduce using rule 4 (expr -> MINUS expr .)
+
+
+state 10
+
+    (10) expr -> LPAREN expr . RPAREN
+
+    RPAREN          shift and go to state 16
+
+
+state 11
+
+    (1) expr -> MOLD NAME EQUAL . NUMBER
+
+    NUMBER          shift and go to state 17
+
+
+state 12
+
+    (2) expr -> MOLD expr PLUS . expr
+    (1) expr -> . MOLD NAME EQUAL NUMBER
+    (2) expr -> . MOLD expr PLUS expr
+    (3) expr -> . MOLD expr MINUS expr
+    (4) expr -> . MINUS expr
+    (5) expr -> . MOLD expr TIMES expr
+    (6) expr -> . MOLD expr DIV expr
+    (7) expr -> . NAME
+    (8) expr -> . MOLD
+    (9) expr -> . NUMBER
+    (10) expr -> . LPAREN expr RPAREN
+
+    MOLD            shift and go to state 2
+    MINUS           shift and go to state 5
+    NAME            shift and go to state 3
+    NUMBER          shift and go to state 4
+    LPAREN          shift and go to state 6
+
+    expr                           shift and go to state 18
+
+state 13
+
+    (3) expr -> MOLD expr MINUS . expr
+    (1) expr -> . MOLD NAME EQUAL NUMBER
+    (2) expr -> . MOLD expr PLUS expr
+    (3) expr -> . MOLD expr MINUS expr
+    (4) expr -> . MINUS expr
+    (5) expr -> . MOLD expr TIMES expr
+    (6) expr -> . MOLD expr DIV expr
+    (7) expr -> . NAME
+    (8) expr -> . MOLD
+    (9) expr -> . NUMBER
+    (10) expr -> . LPAREN expr RPAREN
+
+    MOLD            shift and go to state 2
+    MINUS           shift and go to state 5
+    NAME            shift and go to state 3
+    NUMBER          shift and go to state 4
+    LPAREN          shift and go to state 6
+
+    expr                           shift and go to state 19
+
+state 14
+
+    (5) expr -> MOLD expr TIMES . expr
+    (1) expr -> . MOLD NAME EQUAL NUMBER
+    (2) expr -> . MOLD expr PLUS expr
+    (3) expr -> . MOLD expr MINUS expr
+    (4) expr -> . MINUS expr
+    (5) expr -> . MOLD expr TIMES expr
+    (6) expr -> . MOLD expr DIV expr
+    (7) expr -> . NAME
+    (8) expr -> . MOLD
+    (9) expr -> . NUMBER
+    (10) expr -> . LPAREN expr RPAREN
+
+    MOLD            shift and go to state 2
+    MINUS           shift and go to state 5
+    NAME            shift and go to state 3
+    NUMBER          shift and go to state 4
+    LPAREN          shift and go to state 6
+
+    expr                           shift and go to state 20
+
+state 15
+
+    (6) expr -> MOLD expr DIV . expr
+    (1) expr -> . MOLD NAME EQUAL NUMBER
+    (2) expr -> . MOLD expr PLUS expr
+    (3) expr -> . MOLD expr MINUS expr
+    (4) expr -> . MINUS expr
+    (5) expr -> . MOLD expr TIMES expr
+    (6) expr -> . MOLD expr DIV expr
+    (7) expr -> . NAME
+    (8) expr -> . MOLD
+    (9) expr -> . NUMBER
+    (10) expr -> . LPAREN expr RPAREN
+
+    MOLD            shift and go to state 2
+    MINUS           shift and go to state 5
+    NAME            shift and go to state 3
+    NUMBER          shift and go to state 4
+    LPAREN          shift and go to state 6
+
+    expr                           shift and go to state 21
+
+state 16
+
+    (10) expr -> LPAREN expr RPAREN .
+
+    $end            reduce using rule 10 (expr -> LPAREN expr RPAREN .)
+    PLUS            reduce using rule 10 (expr -> LPAREN expr RPAREN .)
+    MINUS           reduce using rule 10 (expr -> LPAREN expr RPAREN .)
+    TIMES           reduce using rule 10 (expr -> LPAREN expr RPAREN .)
+    DIV             reduce using rule 10 (expr -> LPAREN expr RPAREN .)
+    RPAREN          reduce using rule 10 (expr -> LPAREN expr RPAREN .)
+
+
+state 17
+
+    (1) expr -> MOLD NAME EQUAL NUMBER .
+
+    $end            reduce using rule 1 (expr -> MOLD NAME EQUAL NUMBER .)
+    PLUS            reduce using rule 1 (expr -> MOLD NAME EQUAL NUMBER .)
+    MINUS           reduce using rule 1 (expr -> MOLD NAME EQUAL NUMBER .)
+    TIMES           reduce using rule 1 (expr -> MOLD NAME EQUAL NUMBER .)
+    DIV             reduce using rule 1 (expr -> MOLD NAME EQUAL NUMBER .)
+    RPAREN          reduce using rule 1 (expr -> MOLD NAME EQUAL NUMBER .)
+
+
+state 18
+
+    (2) expr -> MOLD expr PLUS expr .
+
+    $end            reduce using rule 2 (expr -> MOLD expr PLUS expr .)
+    PLUS            reduce using rule 2 (expr -> MOLD expr PLUS expr .)
+    MINUS           reduce using rule 2 (expr -> MOLD expr PLUS expr .)
+    TIMES           reduce using rule 2 (expr -> MOLD expr PLUS expr .)
+    DIV             reduce using rule 2 (expr -> MOLD expr PLUS expr .)
+    RPAREN          reduce using rule 2 (expr -> MOLD expr PLUS expr .)
+
+
+state 19
+
+    (3) expr -> MOLD expr MINUS expr .
+
+    $end            reduce using rule 3 (expr -> MOLD expr MINUS expr .)
+    PLUS            reduce using rule 3 (expr -> MOLD expr MINUS expr .)
+    MINUS           reduce using rule 3 (expr -> MOLD expr MINUS expr .)
+    TIMES           reduce using rule 3 (expr -> MOLD expr MINUS expr .)
+    DIV             reduce using rule 3 (expr -> MOLD expr MINUS expr .)
+    RPAREN          reduce using rule 3 (expr -> MOLD expr MINUS expr .)
+
+
+state 20
+
+    (5) expr -> MOLD expr TIMES expr .
+
+    $end            reduce using rule 5 (expr -> MOLD expr TIMES expr .)
+    PLUS            reduce using rule 5 (expr -> MOLD expr TIMES expr .)
+    MINUS           reduce using rule 5 (expr -> MOLD expr TIMES expr .)
+    TIMES           reduce using rule 5 (expr -> MOLD expr TIMES expr .)
+    DIV             reduce using rule 5 (expr -> MOLD expr TIMES expr .)
+    RPAREN          reduce using rule 5 (expr -> MOLD expr TIMES expr .)
+
+
+state 21
+
+    (6) expr -> MOLD expr DIV expr .
+
+    $end            reduce using rule 6 (expr -> MOLD expr DIV expr .)
+    PLUS            reduce using rule 6 (expr -> MOLD expr DIV expr .)
+    MINUS           reduce using rule 6 (expr -> MOLD expr DIV expr .)
+    TIMES           reduce using rule 6 (expr -> MOLD expr DIV expr .)
+    DIV             reduce using rule 6 (expr -> MOLD expr DIV expr .)
+    RPAREN          reduce using rule 6 (expr -> MOLD expr DIV expr .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for MINUS in state 2 resolved as shift

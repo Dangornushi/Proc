@@ -73,7 +73,9 @@ void VM ( map<string, string> func, string funcname ) {
                 else
                 if ( b.find( "20" ) != string::npos && mode == "str" ) {
                     b = regex_replace( b, regex( "20" ), "" );
-                    d = stoi( b, NULL, 16 );
+                    for ( int  i = 0; i < b.size()-3; i++ ) {
+                        d += stoi( b.substr( i, i+2 ), NULL, 16 );
+                    }
                     strvall[ans] = d;
                 }
                 else

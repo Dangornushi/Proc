@@ -1,4 +1,0 @@
-main:
-mode>str;
-mov x, "NOT";
-put x;
