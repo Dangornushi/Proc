@@ -38,3 +38,6 @@ vector<int> hex(const char *string) ;
 unsigned int binToUInt(const string &str) ;
 bool intj ( string hoge )  ;
 bool intkeyfind(map<string, int> m, string v) ;
+string hextostring( string hex ) ;
+string strspli( int si, string a ) ;
+string strpri( string vec, string ans ) ;

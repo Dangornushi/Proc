@@ -1,3 +1,4 @@
 main:
-mov y, x
-add y, 9
+mode>int;
+mov x, 1212;
+msg x;

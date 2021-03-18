@@ -59,9 +59,12 @@ lexer = lex.lex()
 
 
 def p_mov(p):
-    "expr : NAME NAME EQUAL expr"
-    p[0] = "mov "+str( p[2] )+", "+str( p[4] )+";"
-    ase.write( p[0]+"\n" )
+    "expr : NAME NAME EQUAL NAME"
+    if p[1] == "str":
+        ase.write( "mode>str;\n" )
+    elif p[1] == "int":
+        ase.write( "mode>int;\n" )
+    ase.write( "mov "+str( p[2] )+", "+str( p[4] )+";" )
 
 
 def p_add(p):
@@ -72,12 +75,26 @@ def p_add(p):
 
 def p_addandmov(p):
     "expr : NAME NAME EQUAL NAME PLUS NAME"
-    ase.write( "mov "+p[2]+", "+ p[4]+"\n"+ "add "+p[2]+", "+p[6] )
+    if p[1] == "str":
+        ase.write( "mode>str;\n" )
+    elif p[1] == "int":
+        ase.write( "mode>int;\n" )
+    ase.write( "mov "+p[2]+", "+ p[4]+";\n"+ "add "+p[2]+", "+p[6]+";" )
+
+
+def p_msg(p):
+    "expr : NAME NAME"
+    if p[1] == "msg":
+        ase.write( "\nmsg "+p[2]+";" )
 
 
 def p_subandmov(p):
     "expr : NAME NAME EQUAL NAME MINUS NAME"
-    ase.write( "mov "+p[2]+", "+ p[4]+"\n"+ "sub "+p[2]+", "+p[6] )
+    if p[1] == "str":
+        ase.write( "mode>str;\n" )
+    elif p[1] == "int":
+        ase.write( "mode>int;\n" )
+    ase.write( "mov "+p[2]+", "+ p[4]+";\n"+ "sub "+p[2]+", "+p[6]+";" )
 
 
 def p_sub(p):
@@ -113,7 +130,7 @@ if __name__ == '__main__':
     for i in range( len(data) ):
         lexer.input(data[i])
         parser.parse(data[i])
-        print(data[i])
+        #print(data[i])
         
         while True:
             tok = lexer.token()

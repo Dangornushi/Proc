@@ -198,6 +198,92 @@ vector<string> split(string str, string separator) {
     return result;
 }
 
+string hextostring( string hex ) {
+    string word;
+    map<string, string> hexs;
+    hexs["41"] = "A";
+    hexs["42"] = "B";
+    hexs["43"] = "C";
+    hexs["44"] = "D";
+    hexs["45"] = "E";
+    hexs["46"] = "F";
+    hexs["47"] = "G";
+    hexs["48"] = "H";
+    hexs["49"] = "I";
+    hexs["4a"] = "J";
+    hexs["4b"] = "K";
+    hexs["4c"] = "L";
+    hexs["4d"] = "M";
+    hexs["4e"] = "N";
+    hexs["4f"] = "O";
+    hexs["50"] = "P";
+    hexs["51"] = "Q";
+    hexs["52"] = "R";
+    hexs["53"] = "S";
+    hexs["54"] = "T";
+    hexs["55"] = "U";
+    hexs["56"] = "V";
+    hexs["57"] = "W";
+    hexs["58"] = "X";
+    hexs["59"] = "Y";
+    hexs["5a"] = "Z";
+    hexs["61"] = "a";
+    hexs["62"] = "b";
+    hexs["63"] = "c";
+    hexs["64"] = "d";
+    hexs["65"] = "e";
+    hexs["66"] = "f";
+    hexs["67"] = "g";
+    hexs["68"] = "h";
+    hexs["69"] = "i";
+    hexs["6a"] = "j";
+    hexs["6b"] = "k";
+    hexs["6c"] = "l";
+    hexs["6d"] = "m";
+    hexs["6e"] = "n";
+    hexs["6f"] = "o";
+    hexs["70"] = "p";
+    hexs["71"] = "q";
+    hexs["72"] = "r";
+    hexs["73"] = "s";
+    hexs["74"] = "t";
+    hexs["75"] = "u";
+    hexs["76"] = "v";
+    hexs["77"] = "w";
+    hexs["78"] = "x";
+    hexs["79"] = "y";
+    hexs["7a"] = "z";
+    hexs["30"] = "0";
+    hexs["31"] = "1";
+    hexs["32"] = "2";
+    hexs["33"] = "3";
+    hexs["34"] = "4";
+    hexs["35"] = "5";
+    hexs["36"] = "6";
+    hexs["37"] = "7";
+    hexs["38"] = "8";
+    hexs["39"] = "9";
+
+    word = hexs[hex];
+
+    return word;
+}
+
+string strspli( int si, string a ) {
+    for ( int i = 0; i < si/2; ++i ) {
+        a = a.insert( i+2, ":" );
+    }
+    return a;
+}
+
+string strpri( string vec, string ans ) {
+    if ( vec.size() != 2 ) {
+        print( strspli( ans.size(), vec ) );
+    }
+    string data = hextostring( vec );
+    return data;
+}
+
 vector<string> remove(vector<string> vector, int index) {
     vector.erase(vector.begin() + index);
     return vector;

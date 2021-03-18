@@ -1,4 +1,4 @@
 fn main(0):
-    int x = 12
-    int y = x + 9
+    int x = 1212
+    msg x
     end
