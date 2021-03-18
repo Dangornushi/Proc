@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftPLUSMINUSleftTIMESDIVnonassocUMINUSDIV EQUAL LPAREN MINUS MOLD NAME NUMBER PLUS RPAREN TIMES \n    expr : MOLD NAME EQUAL NUMBER\n    expr : MOLD expr PLUS exprexpr : MOLD expr MINUS exprexpr : MINUS expr %prec UMINUS\n    expr    : MOLD expr TIMES expr\n            | MOLD expr DIV expr\n    expr : NAMEexpr : MOLDexpr : NUMBERexpr : LPAREN expr RPAREN'
+_lr_signature = 'DIVIDE END EQUAL LKAKKO MINUS NAME NUMBER PLUS RKAKKO STA TIMESexpr : NAME NAME EQUAL exprexpr : NAME NAME PLUS SENTexpr : NAME NAME EQUAL NAME PLUS NAMEexpr : NAME NAME EQUAL NAME MINUS NAMEexpr : NAME NAME MINUS SENTSENT : exprexpr : NAME NAME LKAKKO NAME RKAKKO STAexpr : NUMBER'
     
-_lr_action_items = {'MOLD':([0,2,5,6,12,13,14,15,],[2,2,2,2,2,2,2,2,]),'MINUS':([0,2,3,4,5,6,7,8,9,12,13,14,15,16,17,18,19,20,21,],[5,5,-7,-9,5,5,-7,13,-4,5,5,5,5,-10,-1,-2,-3,-5,-6,]),'NAME':([0,2,5,6,12,13,14,15,],[3,7,3,3,3,3,3,3,]),'NUMBER':([0,2,5,6,11,12,13,14,15,],[4,4,4,4,17,4,4,4,4,]),'LPAREN':([0,2,5,6,12,13,14,15,],[6,6,6,6,6,6,6,6,]),'$end':([1,2,3,4,9,16,17,18,19,20,21,],[0,-8,-7,-9,-4,-10,-1,-2,-3,-5,-6,]),'PLUS':([2,3,4,7,8,9,16,17,18,19,20,21,],[-8,-7,-9,-7,12,-4,-10,-1,-2,-3,-5,-6,]),'TIMES':([2,3,4,7,8,9,16,17,18,19,20,21,],[-8,-7,-9,-7,14,-4,-10,-1,-2,-3,-5,-6,]),'DIV':([2,3,4,7,8,9,16,17,18,19,20,21,],[-8,-7,-9,-7,15,-4,-10,-1,-2,-3,-5,-6,]),'RPAREN':([2,3,4,9,10,16,17,18,19,20,21,],[-8,-7,-9,-4,16,-10,-1,-2,-3,-5,-6,]),'EQUAL':([7,],[11,]),}
+_lr_action_items = {'NAME':([0,2,5,6,7,8,9,15,16,],[2,4,9,2,2,14,4,18,19,]),'NUMBER':([0,5,6,7,],[3,3,3,3,]),'$end':([1,3,10,11,12,13,18,19,20,],[0,-8,-1,-2,-6,-5,-3,-4,-7,]),'EQUAL':([4,],[5,]),'PLUS':([4,9,],[6,15,]),'MINUS':([4,9,],[7,16,]),'LKAKKO':([4,],[8,]),'RKAKKO':([14,],[17,]),'STA':([17,],[20,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expr':([0,2,5,6,12,13,14,15,],[1,8,9,10,18,19,20,21,]),}
+_lr_goto_items = {'expr':([0,5,6,7,],[1,10,12,12,]),'SENT':([6,7,],[11,13,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,14 +27,12 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> expr","S'",1,None,None,None),
-  ('expr -> MOLD NAME EQUAL NUMBER','expr',4,'p_exprtonum','main.py',62),
-  ('expr -> MOLD expr PLUS expr','expr',4,'p_add','main.py',68),
-  ('expr -> MOLD expr MINUS expr','expr',4,'p_sub','main.py',73),
-  ('expr -> MINUS expr','expr',2,'p_expr2uminus','main.py',78),
-  ('expr -> MOLD expr TIMES expr','expr',4,'p_mult_div','main.py',84),
-  ('expr -> MOLD expr DIV expr','expr',4,'p_mult_div','main.py',85),
-  ('expr -> NAME','expr',1,'p_expr2NAME','main.py',97),
-  ('expr -> MOLD','expr',1,'p_expr2MOLD','main.py',101),
-  ('expr -> NUMBER','expr',1,'p_expr2NUM','main.py',105),
-  ('expr -> LPAREN expr RPAREN','expr',3,'p_parens','main.py',110),
+  ('expr -> NAME NAME EQUAL expr','expr',4,'p_mov','main.py',62),
+  ('expr -> NAME NAME PLUS SENT','expr',4,'p_add','main.py',68),
+  ('expr -> NAME NAME EQUAL NAME PLUS NAME','expr',6,'p_addandmov','main.py',74),
+  ('expr -> NAME NAME EQUAL NAME MINUS NAME','expr',6,'p_subandmov','main.py',79),
+  ('expr -> NAME NAME MINUS SENT','expr',4,'p_sub','main.py',84),
+  ('SENT -> expr','SENT',1,'p_SENT','main.py',90),
+  ('expr -> NAME NAME LKAKKO NAME RKAKKO STA','expr',6,'p_define','main.py',95),
+  ('expr -> NUMBER','expr',1,'p_expr2NUM','main.py',100),
 ]

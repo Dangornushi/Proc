@@ -1,2 +1,4 @@
-int x + 12
-int y = x
+fn main(0):
+    int x = 12
+    int y = x + 9
+    end

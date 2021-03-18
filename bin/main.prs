@@ -1,0 +1,3 @@
+main:
+mov y, x
+add y, 9
