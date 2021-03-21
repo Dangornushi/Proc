@@ -1,4 +1,5 @@
-fn main(0):
-    int x = 1212
-    msg x
+fn main(0) {
+    int word = Hello
+    msg word
     end
+}

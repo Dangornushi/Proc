@@ -67,6 +67,79 @@ bool intj ( string hoge ) {
     }
 }
 
+int intifj( string data, map<string, int> valls, string mark ) {
+    string funcname = split( data, ", " )[2], a, b;
+    a = split( replace( data, mark+" " ), ", " )[0];
+    b = split( data, ", " )[1];
+    if ( mark == "jnp" ) {
+        if ( intkeyfind( valls, a ) ) {
+            if ( intkeyfind( valls, b ) ) {
+                if ( valls[a] > valls[b] ) {
+                    return 0;
+                }
+                else {
+                    return 1;
+                }
+            }
+            else {
+                if ( valls[a] > atoi(b.c_str() ) ) {
+                    return 0;
+                }
+                else {
+                    return 1;
+                }
+            }
+        }
+        if ( intkeyfind( valls, b ) ) {
+            if ( atoi( a.c_str() ) < valls[b] ) {
+                return 0;
+            }
+        }
+        else {
+            if ( atoi( a.c_str() ) > atoi( b.c_str() ) ) {
+                return 0;
+            }
+            else {
+                return 1;
+            }
+        }
+    }
+    if ( mark == "ja" ) {
+        if ( intkeyfind( valls, a ) ) {
+            if ( intkeyfind( valls, b ) ) {
+                if ( valls[a] < valls[b] ) {
+                    return 0;
+                }
+                else {
+                    return 1;
+                }
+            }
+            else {
+                if ( valls[a] < atoi( b.c_str() ) ) {
+                    return 0;
+                }
+                else {
+                    return 1;
+                }
+            }
+        }
+        if ( intkeyfind( valls, b ) ) {
+            if ( atoi( a.c_str() ) < valls[b] ) {
+                return 0;
+            }
+        }
+        else {
+            if ( atoi( a.c_str() ) < atoi( b.c_str() ) ) {
+                return 0;
+            }
+            else {
+                return 1;
+            }
+        }
+    }
+    return 1;
+}
+
 int ifj( string data, map<string, string> valls, string mark ) {
     string funcname = split( data, ", " )[2], a, b;
     a = split( replace( data, mark ), ", " )[0];
@@ -90,19 +163,6 @@ int ifj( string data, map<string, string> valls, string mark ) {
                 }
             }
         }
-        if ( keyfind( valls, b ) ) {
-            if ( atoi( a.c_str() ) < atoi( valls[b].c_str() ) ) {
-                return 0;
-            }
-        }
-        else {
-            if ( atoi( a.c_str() ) > atoi( b.c_str() ) ) {
-                return 0;
-            }
-            else {
-                return 1;
-            }
-        }
     }
     if ( mark == "ja " ) {
         if ( keyfind( valls, a ) ) {
@@ -121,11 +181,6 @@ int ifj( string data, map<string, string> valls, string mark ) {
                 else {
                     return 1;
                 }
-            }
-        }
-        if ( keyfind( valls, b ) ) {
-            if ( atoi( a.c_str() ) < atoi( valls[b].c_str() ) ) {
-                return 0;
             }
         }
         else {
@@ -263,24 +318,30 @@ string hextostring( string hex ) {
     hexs["37"] = "7";
     hexs["38"] = "8";
     hexs["39"] = "9";
+    hexs["20"] = " ";
+    hexs["2c"] = ",";
 
     word = hexs[hex];
 
     return word;
 }
 
-string strspli( int si, string a ) {
-    for ( int i = 0; i < si/2; ++i ) {
-        a = a.insert( i+2, ":" );
-    }
+string strspli( string a ) {
+    a = a.insert( 2, ":" ); 
     return a;
 }
 
-string strpri( string vec, string ans ) {
-    if ( vec.size() != 2 ) {
-        print( strspli( ans.size(), vec ) );
+string strpri( string a ) {
+    int size = a.size();
+    string data, word;
+    word = a;
+    vector <string> vec;
+    for ( int i = 0; i < size/2; i++ ) {
+        vec.resize(i+1);
+        word = strspli( word );
+        data += hextostring( split( word, ":" )[0] );
+        word = split( word, ":" )[1];
     }
-    string data = hextostring( vec );
     return data;
 }
 

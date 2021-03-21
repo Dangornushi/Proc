@@ -2,8 +2,8 @@
 
 int main( int argc, char **arg ) {
 
-    string comp = "./comp ";
-    string passbuf = "./run ";
+    string comp = "./proc ";
+    string passbuf = "./prun ";
     string name = arg[1];
 
     string pythonrun = "python3 main.py "+name;

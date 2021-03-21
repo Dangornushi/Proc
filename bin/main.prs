@@ -1,4 +1,5 @@
+
 main:
-mode>int;
-mov x, 1212;
-msg x;
+mode>str;
+mov word, Hello;
+msg word;
