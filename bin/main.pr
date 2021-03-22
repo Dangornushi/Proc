@@ -1,5 +1,5 @@
 fn main(0) {
-    int word = Hello
+    str word = Hello
     msg word
     end
 }
