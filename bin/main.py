@@ -179,5 +179,7 @@ if __name__ == '__main__':
     data = file.read().split("    ")
     file.close()
     for i in range( len(data) ):
+        if "//" in data[i]:
+            data[i] = data[i].split( "//" )[0]
         lexer.input(data[i])
         parser.parse(data[i])

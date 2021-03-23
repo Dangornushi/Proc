@@ -3,7 +3,6 @@ main(0):
 pop 0;
 mode>str;
 mov x, 12;
-call print[x];
 
 print(word):
 pop word;

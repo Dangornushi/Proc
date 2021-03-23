@@ -138,8 +138,15 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 */
                 string name = split( split( vdata, "2c" )[0], "20" )[1];
                 string arg = strpri( split( vdata, "2c20" )[1] );
-                for ( int i = 0; i < atoi( arg.c_str() ); ++i ) {
-                    VM( func, name, intvall, strvall );
+                if ( intkeyfind( intvall, arg ) ) {
+                    for ( int i = 0; i < intvall[arg]; ++i ) {
+                        VM( func, name, intvall, strvall );
+                    }
+                }
+                else {
+                    for ( int i = 0; i < atoi( arg.c_str() ); ++i ) {
+                        VM( func, name, intvall, strvall );
+                    }
                 }
             }
         }
