@@ -22,6 +22,40 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                     intvall[ans] = atoi( a.c_str() );
                 }
             }
+            if ( vdata.find( "737562" ) != string::npos ) {
+                // TODO : This is sub / [-]
+                a = hextostring( split( split( vdata, "2c" )[0], "737562" )[1] );
+                b = hextostring( split( vdata, "2c20" )[1] );
+                ans = split( split( vdata, "2c" )[0], "737562" )[1];
+                if ( intkeyfind( intvall, a ) ) {
+                    intvall[ans] = intvall[a] - y;
+                }
+                else {
+                    intvall[ans] = atoi( a.c_str() );
+                }
+            }
+            if ( vdata.find( "6d756c20" ) != string::npos ) {
+                a = hextostring( split( split( vdata, "2c" )[0], "6d756c20" )[1] );
+                b = hextostring( split( vdata, "2c20" )[1] );
+                ans = split( split( vdata, "2c" )[0], "6d756c20" )[1];
+                if ( intkeyfind( intvall, a ) ) {
+                    intvall[ans] = intvall[a] / y;
+                }
+                else {
+                    intvall[ans] = atoi( a.c_str() );
+                }
+            }
+            if ( vdata.find( "64697620" ) != string::npos ) {
+                a = hextostring( split( split( vdata, "2c" )[0], "64697620" )[1] );
+                b = hextostring( split( vdata, "2c20" )[1] );
+                ans = split( split( vdata, "2c" )[0], "64697620" )[1];
+                if ( intkeyfind( intvall, a ) ) {
+                    intvall[ans] = intvall[a] * y;
+                }
+                else {
+                    intvall[ans] = atoi( a.c_str() );
+                }
+            }
             if ( vdata.find( "6d736720" ) != string::npos ) {
                 if ( keyfind( strvall, strpri( split( vdata, "6d736720" )[1] )  ) ) {
                     cout << strvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;

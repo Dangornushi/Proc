@@ -1,10 +1,11 @@
 fn main(0) { 
-    str x = 12 
-    //print(x) 
+    int x = 12 
+    print(x) 
     end 
 }
 
 fn print(word) {
-    msg word
+    int x = word - 1
+    msg x 
     end
 }

@@ -1,9 +1,13 @@
 
 main(0):
 pop 0;
-mode>str;
+mode>int;
 mov x, 12;
+call print[x];
 
 print(word):
 pop word;
-msg word;
+mode>int;
+mov x, word;
+sub x, 1;
+msg x;

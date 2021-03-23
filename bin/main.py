@@ -84,27 +84,31 @@ def p_addandmov(p):
         ase.write( "mode>str;\n" )
     elif p[1] == "int":
         ase.write( "mode>int;\n" )
-    ase.write( "mov "+p[2]+", "+ p[4]+";\n"+ "add "+p[2]+", "+p[6]+";" )
+    ase.write( "mov "+p[2]+", "+ p[4]+";\n"+ "add "+p[2]+", "+p[6]+";\n" )
 
 
 def p_subandmov(p):
     "expr : NAME NAME EQUAL NAME MINUS NAME"
-    ase.write( "mov "+p[2]+", "+ p[4]+";\n"+ "sub "+p[2]+", "+p[6]+";" )
+    ase.write( "mode>int;\n" )
+    ase.write( "mov "+p[2]+", "+ p[4]+";\n"+ "sub "+p[2]+", "+p[6]+";\n" )
 
 
 def p_divandmov(p):
     "expr : NAME NAME EQUAL NAME DIVIDE NAME"
-    ase.write( "mov "+p[2]+", "+ p[4]+";\n"+ "div "+p[2]+", "+p[6]+";" )
+    ase.write( "mode>int;\n" )
+    ase.write( "mov "+p[2]+", "+ p[4]+";\n"+ "div "+p[2]+", "+p[6]+";\n" )
 
 
 def p_timandmov(p):
     "expr : NAME NAME EQUAL NAME TIMES NAME"
-    ase.write( "mov "+p[2]+", "+ p[4]+";\n"+ "tim "+p[2]+", "+p[6]+";" )
+    ase.write( "mode>int;\n" )
+    ase.write( "mov "+p[2]+", "+ p[4]+";\n"+ "mul "+p[2]+", "+p[6]+";\n" )
 
 
 def p_sub(p):
     "expr : NAME NAME MINUS SENT"
     p[0] = "sub "+str( p[2] )+", "+str( p[4] )+";"
+    ase.write( "mode>int;\n" )
     ase.write( p[0]+"\n" )
 
 
