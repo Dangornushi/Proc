@@ -1,5 +1,10 @@
 
-main:
+main(0):
+pop 0;
 mode>str;
-mov word, Hello;
+mov x, 12;
+call print[x];
+
+print(word):
+pop word;
 msg word;

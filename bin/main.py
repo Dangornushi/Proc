@@ -41,7 +41,7 @@ t_IF1    = r">"
 t_IF2    = r"<"
 
 def t_NAME(t):
-    r"\w+ "
+    r"[a-zA-Z0-9&\,]+"
     return t
 
 
@@ -112,6 +112,9 @@ def p_msg(p):
     "expr : NAME NAME"
     if p[1] == "msg":
         ase.write( "msg "+p[2]+";"+"\n" )
+    elif p[1] == "return":
+        global funcname
+        ase.write( "\nret "+funcname+", "+p[2] )
 
 
 def p_SENT(p):
@@ -121,7 +124,12 @@ def p_SENT(p):
 
 def p_define(p):
     "expr : NAME NAME LKAKKO NAME RKAKKO LNAMI"
-    ase.write( "\n"+p[2]+":"+"\n" )
+    global funcname
+    funcname = p[2]+"("+p[4]+")"
+    ase.write( "\n"+funcname+":"+"\n" )
+    
+    for p in p[4].split( "," ):
+        ase.write( "pop "+p+";\n" )
 
 
 def p_if(p):
@@ -144,9 +152,16 @@ def p_if3(p):
     jampc+=1
 
 
+def p_while(p):
+    "expr : NAME NAME LNAMI"
+    global jampc
+    ase.write( "jmp L"+str( jampc )+", "+p[2]+";\n\nL"+str( jampc )+"():\n" )
+    jampc+=1
+
+
 def p_call(p):
     "expr : NAME LKAKKO NAME RKAKKO"
-    ase.write( "call "+p[1]+";"+"\n" )
+    ase.write( "call "+p[1]+"["+p[3]+"];"+"\n" )
 
 
 def p_expr2NUM( p ) :

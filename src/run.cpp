@@ -6,7 +6,7 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
     string vdata, ans, a, b, mode, anser;
     stringstream ss, ss2;
 
-    int y, x;
+    int y, x, popc=0, callc=0;
     for ( int i = 0; i < vec.size(); i++ ) {
         vdata = vec[i];
         vdata = regex_replace( vdata, regex("22"),"20");
@@ -23,26 +23,12 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 }
             }
             if ( vdata.find( "6d736720" ) != string::npos ) {
-                if ( keyfind( strvall, hextostring( split( vdata, "6d736720" )[1] )  ) ) {
-                    cout << strvall[hextostring( split( vdata, "6d736720" )[1] ) ] << endl;
+                if ( keyfind( strvall, strpri( split( vdata, "6d736720" )[1] )  ) ) {
+                    cout << strvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
                 }
                 else
-                if ( intkeyfind(intvall, hextostring( split( vdata, "6d736720" )[1] )  ) ) {
-                    cout << intvall[hextostring( split( vdata, "6d736720" )[1] ) ] << endl;
-                }
-            }
-            if ( vdata.find( "70757420" ) != string::npos ) {
-                if ( vdata.substr( 8, 9 ) == "20" ) {
-                    print(vdata.substr( 10, vdata.size() ));
-                }
-                else {
-                    a = split( vdata, "20" )[1];
-                    if ( keyfind( strvall, a ) ) {
-                        print( strvall[a] );
-                    }
-                    else {
-                        printint( intvall[a] );
-                    }
+                if ( intkeyfind(intvall, strpri( split( vdata, "6d736720" )[1] )  ) ) {
+                    cout << intvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
                 }
             }
 
@@ -69,9 +55,32 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 }
             }
             if ( vdata.find( "63616c6c" ) != string::npos ) {
-                intvall.clear();
-                strvall.clear();
-                VM( func, split( split( vdata, "63616c6c20" )[1], "3a" )[0], intvall, strvall );
+                /*
+                ? This is "call"
+                ？　（　より前の語句のみ格納されている、つまり呼び出しには　（　より前でのみ読み読み込みされれば良い。
+                ？　（　よりあとかつ　）　の前での語句のみを独自に読み取り変数の受け渡しに使用
+                ？　ただしそれには呼び出し時に引数を記述しなければならない
+                ？　⇨　base : callを抜き出したもともとの文字列、呼び出し文
+                ？　⇨　func : 呼び出しされる関数名
+                ？　⇨　 arg : 受け渡される変数名が加わる文字列
+                */
+                string arg = split( split( vdata, "5d" )[0], "5b" )[1], arg2;
+                vector<string> vec;
+                map<string, int>intvall2;
+                map<string, string>strvall2;
+                if ( arg.find( "2c" ) != string::npos ) {
+                    vec = split( arg, "2c" );
+                    for ( int i = 0; i < vec.size(); i++ ) {
+                        vec[i] = strpri(vec[i]);
+                        strvall2[to_string(i)] = strvall[ vec[i] ];
+                    }
+                }
+                else {
+                    arg2 = strpri( arg );
+                    strvall2 [ to_string( callc ) ] = strvall [arg2];
+                    callc++;
+                }
+                VM( func, split( split( vdata, "63616c6c20" )[1], "5b" )[0], intvall2, strvall2 );
             }
             if ( vdata.find( "6a6e7020" ) != string::npos ) {
                 string base, c, badata;
@@ -92,6 +101,12 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 }
             }
             if ( vdata.find( "6a616520" ) != string::npos ) {
+                /*
+                ? This is "jae"
+                ? a == b { func[c] }
+                ? summary : if ( equal )
+                ? base : base string
+                */
                 string base, a, c;
                 base = split( vdata, "6a616520" )[1];
                 a = strpri( split( base, "2c20" )[0] );
@@ -108,7 +123,24 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                         VM( func, c, intvall, strvall );
                     }
                 }                
-                //VM( func, c, intvall, strvall );
+            }
+            if ( vdata.find( "706f7020" ) != string::npos ) {
+                // TODO : This is "pop"
+                string arg = strpri( split( vdata, "706f7020" )[1]);
+                strvall [ arg ] = strvall[ to_string( popc ) ];
+                popc++;
+            }
+            if ( vdata.find( "6a6d7020" ) != string::npos ) {
+                /*
+                ? this is "while"
+                ? name = call function`s name
+                ? arg = loop count
+                */
+                string name = split( split( vdata, "2c" )[0], "20" )[1];
+                string arg = strpri( split( vdata, "2c20" )[1] );
+                for ( int i = 0; i < atoi( arg.c_str() ); ++i ) {
+                    VM( func, name, intvall, strvall );
+                }
             }
         }
     }
@@ -134,7 +166,7 @@ int main( int argc, char **arg ){
     for ( int i = 0; i < vec.size(); i++ ) {
         vec[i] = vec[i] + "3b";
         if ( vec[i].find("3a") != string::npos ) {
-            funcname = split( vec[i], "3a" )[0];
+            funcname = split( vec[i], "28" )[0];
             func[funcname] += split( vec[i], "3a" )[1];
         }
         else {
