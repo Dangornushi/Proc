@@ -7,7 +7,7 @@ call print[x];
 
 print(word):
 pop word;
+sub word, 1;
 mode>int;
 mov x, word;
-sub x, 1;
 msg x;

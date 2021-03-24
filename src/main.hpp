@@ -42,3 +42,4 @@ string hextostring( string hex ) ;
 string strspli( string a ) ;
 string strpri( string a ) ;
 int intifj( string data, map<string, int> valls, string mark ) ;
+map <string, int> calcproc( map<string, int>intvall, string mark, string mode, string vdata ) ;

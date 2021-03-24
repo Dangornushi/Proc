@@ -7,6 +7,17 @@ ase = open( sys.argv[1]+"s", "a" )
 ase.truncate(0)
 
 jampc = 0
+dic = 0
+func = {}
+
+def dictj( dick, a, b ):
+    if a in dick and b in dick:
+        return 0
+    elif a in dick:
+        return 1
+    elif b in dick:
+        return 2
+    return 0
 
 # トークンリスト 常に必須
 tokens = (
@@ -65,17 +76,13 @@ lexer = lex.lex()
 
 def p_mov(p):
     "expr : NAME NAME EQUAL NAME"
+    global func
     if p[1] == "str":
         ase.write( "mode>str;\n" )
     elif p[1] == "int":
         ase.write( "mode>int;\n" )
+    func[p[2]] = p[4]
     ase.write( "mov "+str( p[2] )+", "+str( p[4] )+";"+"\n" )
-
-
-def p_add(p):
-    "expr : NAME NAME PLUS SENT"
-    p[0] = "add "+str( p[2] )+", "+str( p[4] )+";"
-    ase.write( p[0]+"\n" )
 
 
 def p_addandmov(p):
@@ -89,8 +96,10 @@ def p_addandmov(p):
 
 def p_subandmov(p):
     "expr : NAME NAME EQUAL NAME MINUS NAME"
+    global dic
+    ase.write( "sub "+p[4]+", "+ p[6]+";\n" )
     ase.write( "mode>int;\n" )
-    ase.write( "mov "+p[2]+", "+ p[4]+";\n"+ "sub "+p[2]+", "+p[6]+";\n" )
+    ase.write( "mov "+p[2]+", "+p[4]+";\n" )
 
 
 def p_divandmov(p):
@@ -128,13 +137,16 @@ def p_SENT(p):
 
 def p_define(p):
     "expr : NAME NAME LKAKKO NAME RKAKKO LNAMI"
-    global funcname
+    global funcname, func, dic
+    dic = 0
     funcname = p[2]+"("+p[4]+")"
     ase.write( "\n"+funcname+":"+"\n" )
     
-    for p in p[4].split( "," ):
-        ase.write( "pop "+p+";\n" )
-
+    if "," in p[4]:
+        for i in range(len( p[4].split( "," ) )):
+            ase.write( "pop "+str( p[i] )+";\n" )
+    else:
+        ase.write( "pop "+p[4]+";\n" )
 
 def p_if(p):
     "expr : NAME NAME IF1 NAME LNAMI"

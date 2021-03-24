@@ -320,6 +320,7 @@ string hextostring( string hex ) {
     hexs["39"] = "9";
     hexs["20"] = " ";
     hexs["2c"] = ",";
+    hexs["00"] = " ";
 
     word = hexs[hex];
 
@@ -356,4 +357,47 @@ bool keyfind(map<string, string> m, string v) {
 
 bool intkeyfind(map<string, int> m, string v) {
     return m.find(v) != m.end(); // findを使ったいつものやつ
+}
+
+map <string, int> calcproc( map<string, int>intvall, string mark, string mode, string vdata ) {
+    
+    if ( vdata.find( "00" ) != string::npos ) {
+        vdata = regex_replace( vdata, regex( "00" ), "" );
+    }
+    if ( vdata.find( "20" ) != string::npos ) {
+        vdata = regex_replace( vdata, regex( "20" ), "" );
+    }
+    print(strpri(vdata));
+
+    string a = strpri ( split( split( vdata, "2c" )[0], mark )[1] ); 
+    string b = strpri ( split( vdata, "2c" )[1] ) ;
+    string ans = strpri( split( split( vdata, "2c" )[0], mark )[1] ) ;
+
+    // TODO : 内容確認用 : cout << a << ":" << b << ":" << ans << ":" << strpri( vdata ) << ":" << vdata << endl;
+
+    if ( a.find( " " ) != string::npos ) { a = regex_replace( a, regex( " " ), "" ); }
+    
+    if ( intkeyfind( intvall, a ) ) {
+    
+        if ( mark == "616464" ) { intvall[ans] = intvall[a] + atoi( b.c_str() ); }
+    
+        if ( mark == "73756" ) { intvall[ans] = intvall[a] - atoi( b.c_str() ); }
+    
+        if ( mark == "646976" ) { intvall[ans] = intvall[a] * atoi( b.c_str() ); }
+    
+        if ( mark == "6d756c" ) { intvall[ans] = intvall[a] / atoi( b.c_str() ); }
+    }
+    /*if ( mode == "str" ) {
+        if ( mark == "61646420" ) { intvall[ans] = atoi( a.c_str() ) + intvall[b] ; }
+    
+        else
+        if ( mark == "73756220" ) { intvall[ans] = atoi( a.c_str() ) - intvall[b] ; }
+    
+        else
+        if ( mark == "64697620" ) { intvall[ans] = atoi( a.c_str() ) * intvall[b] ; }
+    
+        else
+        if ( mark == "6d756c20" ) { intvall[ans] = atoi( a.c_str() ) / intvall[b]  ; };
+    }*/
+    return intvall;
 }
