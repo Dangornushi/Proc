@@ -91,7 +91,7 @@ int intifj( string data, map<string, int> valls, string mark ) {
             }
         }
         if ( intkeyfind( valls, b ) ) {
-            if ( atoi( a.c_str() ) < valls[b] ) {
+            if ( atoi( a.c_str() ) > valls[b] ) {
                 return 0;
             }
         }
@@ -321,6 +321,8 @@ string hextostring( string hex ) {
     hexs["20"] = " ";
     hexs["2c"] = ",";
     hexs["00"] = " ";
+    hexs["3c"] = "<";
+    hexs["3e"] = ">";
 
     word = hexs[hex];
 
@@ -367,8 +369,8 @@ map <string, int> calcproc( map<string, int>intvall, string mark, string mode, s
     if ( vdata.find( "20" ) != string::npos ) {
         vdata = regex_replace( vdata, regex( "20" ), "" );
     }
-    print(strpri(vdata));
 
+    if ( mark == "73756" ) { mark = "737562"; }
     string a = strpri ( split( split( vdata, "2c" )[0], mark )[1] ); 
     string b = strpri ( split( vdata, "2c" )[1] ) ;
     string ans = strpri( split( split( vdata, "2c" )[0], mark )[1] ) ;
@@ -381,23 +383,11 @@ map <string, int> calcproc( map<string, int>intvall, string mark, string mode, s
     
         if ( mark == "616464" ) { intvall[ans] = intvall[a] + atoi( b.c_str() ); }
     
-        if ( mark == "73756" ) { intvall[ans] = intvall[a] - atoi( b.c_str() ); }
+        if ( mark == "737562" ) { intvall[ans] = intvall[a] - atoi( b.c_str() ); }
     
         if ( mark == "646976" ) { intvall[ans] = intvall[a] * atoi( b.c_str() ); }
     
         if ( mark == "6d756c" ) { intvall[ans] = intvall[a] / atoi( b.c_str() ); }
     }
-    /*if ( mode == "str" ) {
-        if ( mark == "61646420" ) { intvall[ans] = atoi( a.c_str() ) + intvall[b] ; }
-    
-        else
-        if ( mark == "73756220" ) { intvall[ans] = atoi( a.c_str() ) - intvall[b] ; }
-    
-        else
-        if ( mark == "64697620" ) { intvall[ans] = atoi( a.c_str() ) * intvall[b] ; }
-    
-        else
-        if ( mark == "6d756c20" ) { intvall[ans] = atoi( a.c_str() ) / intvall[b]  ; };
-    }*/
     return intvall;
 }

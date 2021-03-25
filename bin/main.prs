@@ -3,11 +3,15 @@ main(0):
 pop 0;
 mode>int;
 mov x, 12;
-call print[x];
-
-print(word):
-pop word;
-sub word, 1;
 mode>int;
-mov x, word;
-msg x;
+mov ja, 1;
+call print[x,ja];
+
+print(word,j):
+pop word;
+pop j;
+msg word;
+ja 0, 1, L0;
+L0(<all>):
+pop <all>;
+msg word;

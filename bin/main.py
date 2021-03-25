@@ -143,35 +143,35 @@ def p_define(p):
     ase.write( "\n"+funcname+":"+"\n" )
     
     if "," in p[4]:
-        for i in range(len( p[4].split( "," ) )):
-            ase.write( "pop "+str( p[i] )+";\n" )
+        for data in p[4].split( "," ):
+            ase.write( "pop "+data+";\n" )
     else:
         ase.write( "pop "+p[4]+";\n" )
 
 def p_if(p):
     "expr : NAME NAME IF1 NAME LNAMI"
     global jampc
-    ase.write( "jnp "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str( jampc )+":"+"\n" )
+    ase.write( "jnp "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str( jampc )+"(<all>):\n"+"\npop <all>;\n" )
     jampc+=1
 
 def p_if2(p):
     "expr : NAME NAME IF2 NAME LNAMI"
     global jampc
-    ase.write( "ja "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str(jampc)+":"+"\n" )
+    ase.write( "ja "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str(jampc)+"(<all>):\n"+"\npop <all>;\n" )
     jampc+=1
 
 
 def p_if3(p):
     "expr : NAME NAME EQUAL EQUAL NAME LNAMI"
     global jampc
-    ase.write( "jae "+p[2]+", "+p[5]+", L"+str( jampc )+";"+"\n"+"L"+str(jampc)+":"+"\n" )
+    ase.write( "jae "+p[2]+", "+p[5]+", L"+str( jampc )+";"+"\n"+"L"+str(jampc)+"(<all>):\n"+"\npop <all>;\n" )
     jampc+=1
 
 
 def p_while(p):
     "expr : NAME NAME LNAMI"
     global jampc
-    ase.write( "jmp L"+str( jampc )+", "+p[2]+";\n\nL"+str( jampc )+"():\n" )
+    ase.write( "jmp L"+str( jampc )+", "+p[2]+";\n\nL"+str( jampc )+"(<all>):\npop <all>;\n" )
     jampc+=1
 
 

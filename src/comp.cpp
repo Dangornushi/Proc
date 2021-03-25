@@ -3,9 +3,13 @@
 int main( int argc, char **arg ){
     string data, name = arg[1];
     stringstream ss;
+    fstream ofs;
     ifstream ifs( name+"s", ios::binary|ios::in );
-    ofstream ofs ( split( name, "." )[0], ios::binary|ios::out );
+    ofs.open ( split( name, "." )[0], ios::out|ios::binary );
 
+    if(! ofs.is_open()) {
+        return EXIT_FAILURE;
+    }
     while ( getline( ifs, data ) ) {
         for ( int i = 0; i < data.size();i++ ) {
             string data2 = data.substr( i, data.size()-(data.size()-1) );
@@ -14,7 +18,7 @@ int main( int argc, char **arg ){
             }
         }
     }
-    ofs << ss.str() << flush;
+    ofs.write((const char*)&ss, sizeof ss);
     ofs.close();
     ifs.close();
 
