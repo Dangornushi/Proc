@@ -1,15 +1,5 @@
-
 fn main(0) {
     int x = 12
-    int ja = 1
-    print(x,ja)
-    end a
-}
-
-fn print(word,j) {
-    msg word
-    if 0 < j {
-        msg word
-    }
-    end
+    print(x)
+    return 0
 }

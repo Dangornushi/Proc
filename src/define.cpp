@@ -29,7 +29,7 @@ vector<string> import(string funcname, string filename) {
             count++;
             j = 0;
         }
-        if ( data3.substr( 0, 7 ) == "    fin" ) {
+        if ( data3.substr( 0, 7 ) == "end;" ) {
             count2++;
             if ( count == count2 ) {
                 

@@ -1,0 +1,5 @@
+print(word):
+pop word;
+msg word;
+ret print 0;
+end;

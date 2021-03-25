@@ -9,6 +9,7 @@ ase.truncate(0)
 jampc = 0
 dic = 0
 func = {}
+funcname = ""
 
 def dictj( dick, a, b ):
     if a in dick and b in dick:
@@ -31,7 +32,6 @@ tokens = (
     "LKAKKO",
     "RKAKKO",
     "LNAMI",
-    "RNAMI",
     "STA",
     "IF1",
     "IF2",
@@ -46,13 +46,11 @@ t_EQUAL  = r'\='
 t_LKAKKO = r'\('
 t_RKAKKO = r'\)'
 t_LNAMI = r'{'
-t_RNAMI = r'}'
-t_STA    = r"{"
 t_IF1    = r">"
 t_IF2    = r"<"
 
 def t_NAME(t):
-    r"[a-zA-Z0-9&\,]+"
+    r"[a-zA-Z0-9&\,@}]+"
     return t
 
 
@@ -125,10 +123,9 @@ def p_msg(p):
     "expr : NAME NAME"
     if p[1] == "msg":
         ase.write( "msg "+p[2]+";"+"\n" )
-    elif p[1] == "return":
+    if p[1] == "return":
         global funcname
-        ase.write( "\nret "+funcname+", "+p[2] )
-
+        ase.write( "ret "+funcname.split( "(" )[0]+", "+p[2]+";\nend;" )
 
 def p_SENT(p):
     "SENT : expr"
@@ -141,18 +138,20 @@ def p_define(p):
     dic = 0
     funcname = p[2]+"("+p[4]+")"
     ase.write( "\n"+funcname+":"+"\n" )
-    
+
     if "," in p[4]:
         for data in p[4].split( "," ):
             ase.write( "pop "+data+";\n" )
     else:
         ase.write( "pop "+p[4]+";\n" )
 
+
 def p_if(p):
     "expr : NAME NAME IF1 NAME LNAMI"
     global jampc
     ase.write( "jnp "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str( jampc )+"(<all>):\n"+"\npop <all>;\n" )
     jampc+=1
+
 
 def p_if2(p):
     "expr : NAME NAME IF2 NAME LNAMI"
@@ -188,11 +187,13 @@ def p_expr2NUM( p ) :
 def p_error(p):
     pass
 
+
 parser = yacc.yacc()
+
 
 if __name__ == '__main__':
     file = open( sys.argv[1], "r" )
-    data = file.read().split("    ")
+    data = file.read().replace( "}", "" ).split("    ")
     file.close()
     for i in range( len(data) ):
         if "//" in data[i]:

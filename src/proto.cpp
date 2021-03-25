@@ -12,7 +12,7 @@ int main( int argc, char **arg ) {
 
     system(pythonrun.c_str());
     system(comp.c_str());
-    system(passbuf.c_str());
+    //system(passbuf.c_str());
 
     return 0;
 }

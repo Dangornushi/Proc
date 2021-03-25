@@ -137,7 +137,8 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 base = split( vdata, "6a616520" )[1];
                 a = strpri( split( base, "2c20" )[0] );
                 b = strpri( split( split( base, "2c20" )[1], "0c20" )[0] );
-                c = split( base, "0c20" )[1];
+                if ( base.find( "0c20" ) != string::npos ) { c = split( base, "0c20" )[1]; }
+                else { c = split( base, "2c20" )[2]; }
                 if ( intkeyfind( intvall, a ) ) {
                     if ( intkeyfind( intvall, b ) ) {
                         if ( atoi( a.c_str() ) == atoi( b.c_str() ) ) {
