@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import ply.lex as lex 
 import ply.yacc as yacc
-import sys
+import sys, os
 
 ase = open( sys.argv[1]+"s", "a" )
 ase.truncate(0)
@@ -32,7 +32,6 @@ tokens = (
     "LKAKKO",
     "RKAKKO",
     "LNAMI",
-    "STA",
     "IF1",
     "IF2",
 )
@@ -125,7 +124,7 @@ def p_msg(p):
         ase.write( "msg "+p[2]+";"+"\n" )
     if p[1] == "return":
         global funcname
-        ase.write( "ret "+funcname.split( "(" )[0]+", "+p[2]+";\nend;" )
+        ase.write( "ret "+funcname.split( "(" )[0]+", "+p[2]+";\n\nend;" )
 
 def p_SENT(p):
     "SENT : expr"
@@ -149,28 +148,28 @@ def p_define(p):
 def p_if(p):
     "expr : NAME NAME IF1 NAME LNAMI"
     global jampc
-    ase.write( "jnp "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str( jampc )+"(<all>):\n"+"\npop <all>;\n" )
+    ase.write( "jnp "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n\n"+"L"+str( jampc )+"():\n" )
     jampc+=1
 
 
 def p_if2(p):
     "expr : NAME NAME IF2 NAME LNAMI"
     global jampc
-    ase.write( "ja "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n"+"L"+str(jampc)+"(<all>):\n"+"\npop <all>;\n" )
+    ase.write( "ja "+p[2]+", "+p[4]+", L"+str( jampc )+";"+"\n\n"+"L"+str(jampc)+"():\n" )
     jampc+=1
 
 
 def p_if3(p):
     "expr : NAME NAME EQUAL EQUAL NAME LNAMI"
     global jampc
-    ase.write( "jae "+p[2]+", "+p[5]+", L"+str( jampc )+";"+"\n"+"L"+str(jampc)+"(<all>):\n"+"\npop <all>;\n" )
+    ase.write( "jae "+p[2]+", "+p[5]+", L"+str( jampc )+";"+"\n\n"+"L"+str(jampc)+"():\n" )
     jampc+=1
 
 
 def p_while(p):
     "expr : NAME NAME LNAMI"
     global jampc
-    ase.write( "jmp L"+str( jampc )+", "+p[2]+";\n\nL"+str( jampc )+"(<all>):\npop <all>;\n" )
+    ase.write( "jmp L"+str( jampc )+", "+p[2]+";\n\nL"+str( jampc )+"():\n" )
     jampc+=1
 
 
@@ -188,15 +187,27 @@ def p_error(p):
     pass
 
 
-parser = yacc.yacc()
+parser = yacc.yacc( debug=0, write_tables=0 )
 
 
 if __name__ == '__main__':
+    print("File open", end="")
     file = open( sys.argv[1], "r" )
+    print("...", end="")
     data = file.read().replace( "}", "" ).split("    ")
+    print("clear")
     file.close()
+    print("File write", end="")
     for i in range( len(data) ):
+        print(".", end="")
         if "//" in data[i]:
             data[i] = data[i].split( "//" )[0]
         lexer.input(data[i])
         parser.parse(data[i])
+    print("clear\nDel file")
+    if os.path.exists( "lextab.py" ) :
+        os.remove( "lextab.py" )
+    if os.path.exists( "parsetab.py" ) :
+        os.remove( "parsetab.py" )
+        os.remove( "parser.out" )
+    print("clear")

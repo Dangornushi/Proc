@@ -11,7 +11,6 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
         vdata = vec[i];
         vdata = regex_replace( vdata, regex("22"),"20");
         if ( vdata != "" ) {
-            
             if ( vdata.find( "61646420" ) != string::npos ) {
                 string mark = "616464" ;
                 intvall = calcproc( intvall, mark, mode, vdata );
@@ -34,7 +33,6 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 intvall = calcproc( intvall, mark, mode, vdata );
             }
             if ( vdata.find( "6d736720" ) != string::npos ) {
-
                 if ( keyfind( strvall, strpri( split( vdata, "6d736720" )[1] )  ) ) {
                     if ( strvall[ strpri( split( vdata, "6d736720" )[1] ) ] != "" ) {
                         cout << strvall[ strpri( split( vdata, "6d736720" )[1] ) ] << endl;
@@ -50,7 +48,7 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 TODO : This is mov
                 */
                 string data, a;
-                ans = hextostring( split( split( vdata, "2c20" )[0], "6d6f7620" )[1] );
+                ans = strpri( split( split( vdata, "2c20" )[0], "6d6f7620" )[1] );
                 a = split( vdata, "2c20" )[1];
                 data = strpri( a );
                 if( mode == "int" ) {
@@ -104,12 +102,15 @@ void VM ( map<string, string> func, string funcname, map <string, int> intvall, 
                 VM( func, split( split( vdata, "63616c6c20" )[1], "5b" )[0], intvall2, strvall2 );
             }
             if ( vdata.find( "6a6e7020" ) != string::npos ) {
+                /*
+                TODO : This is jnp.
+                */
                 string base, c, badata;
                 base = split( vdata, "6a6e7020" )[1];
                 if ( base.find( "0c20" ) != string::npos ) { c = split( base, "0c20" )[1]; }
                 else { c = split( base, "2c20" )[2]; }
                 badata = strpri( vdata );
-                if ( intifj( badata, intvall, "jnp" ) == 1 ) {
+                if ( intifj( badata, intvall, "jnp" ) == 0 ) {
                     VM( func, c, intvall, strvall );
                 }
             }

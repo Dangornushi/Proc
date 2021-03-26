@@ -1,5 +1,5 @@
-sub1(w):
-pop w;
-msg w;
-ret sub1 0;
+sub(wx):
+pop wx;
+msg wx;
+ret sub 0;
 end;
