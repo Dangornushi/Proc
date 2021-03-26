@@ -7,7 +7,7 @@ int main( int argc, char **arg ) {
     string name = arg[1];
 
     string pythonrun = "python3 main.py "+name;
-    comp = comp + arg[1];
+    comp = comp + arg[1] + " " + arg[2] + " " + arg[3];
     passbuf = passbuf + split( arg[1], "." )[0];
 
     system(pythonrun.c_str());

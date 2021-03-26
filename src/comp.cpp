@@ -1,7 +1,7 @@
 #include "main.hpp"
 
 int main( int argc, char **arg ){
-    string data, name = arg[1], funcs;
+    string data, name = arg[1], funcs, filename = arg[2], option = arg[3];
     stringstream ss, ss2;
     fstream ofs;
     ifstream ifs( name+"s", ios::binary|ios::in );
@@ -24,7 +24,9 @@ int main( int argc, char **arg ){
         }
     }
 
-    impv = import( funcs, "include/dango.rh" );
+    print(filename);
+    if ( option == "-o" ) { impv = import( funcs, filename ); }
+    else { impv = import( funcs, "include/dango.rh" ); }
 
     int ii = 0;
     for ( int i = 0; i < impv.size(); i++ ) {

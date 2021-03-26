@@ -3,6 +3,6 @@ main(0):
 pop 0;
 mode>int;
 mov x, 12;
-call print[x];
+call sub1[x];
 ret main, 0;
 end;
